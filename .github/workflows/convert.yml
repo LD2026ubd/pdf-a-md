@@ -8,11 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Instalar Pandoc
-        run: sudo apt-get install -y pandoc
-      - name: Convertir PDF
-        run: pandoc *.pdf -o resultado.md
-      - name: Guardar resultado
+      - name: Instalar pdftotext
+        run: sudo apt-get install -y poppler-utils
+      - name: Convertir PDF a TXT
+        run: pdftotext *.pdf salida.txt
+      - name: Guardar como Markdown
+        run: mv salida.txt resultado.md
+      - name: Subir resultado
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
